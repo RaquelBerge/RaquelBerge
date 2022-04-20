@@ -6,6 +6,7 @@ The project is based on a “tax calculator”, which inputs “gross salary” 
 
 - 🔀 PROCESS FLOW OVERVIEW:
 
+![Screenshot 2022-04-20 at 19 45 29](https://user-images.githubusercontent.com/103449143/164281722-20a8dae5-5883-4a91-80b2-86303f88089e.png)
 
 - 📑 DATABASE STRUCTURE OVERVIEW:
 
