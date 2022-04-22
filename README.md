@@ -10,7 +10,7 @@ The project is based on a “tax calculator”, which inputs “gross salary” 
 
 - 📑 DATABASE STRUCTURE OVERVIEW:
 
-
+![Screenshot 2022-04-22 at 19 49 46](https://user-images.githubusercontent.com/103449143/164763962-07745ccf-669a-4f9c-bfb1-a0a3e39a7462.png)
 
 - 🖥️ CODE:
 Code is written in Java on IntellJ platform and database is created in MySQLWorkBench.
