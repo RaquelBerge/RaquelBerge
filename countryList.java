@@ -1,17 +1,13 @@
 package finalProject;
 
-import javax.sound.midi.Soundbank;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Random;
-import java.util.Scanner;
 
-public class countryList {
+public class CountryList {
 
-    Scanner scanner = new Scanner(System.in);
-
-    public void Latvia(Connection conn,int children, double minimum, double grossIncome, boolean disability, boolean pensioner)throws Exception{
+    public void Latvia(Connection conn, int children, double minimum, double grossIncome, boolean disability, boolean pensioner) throws Exception {
 
         String sql = "INSERT INTO usersLatvia(pensioner, disability, minimum, grossIncome, children) VALUES (?, ?, ?, ?, ?);";
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -20,8 +16,15 @@ public class countryList {
         preparedStatement.setBoolean(2, disability);
         preparedStatement.setDouble(3, minimum);
         preparedStatement.setDouble(4, grossIncome);
-        preparedStatement.setInt(5,children);
+        preparedStatement.setInt(5, children);
 
+        int rowLatvia = preparedStatement.executeUpdate();
+
+        if (rowLatvia > 0) {
+            System.out.println("A new user was inserted successfully");
+        } else {
+            System.out.println("Something went wrong");
+        }
 
         int pens;
         if (pensioner = true) {
@@ -36,11 +39,10 @@ public class countryList {
         } else {
             dis = 0;
         }
-        //social tax
+
         double socialTax = grossIncome * 0.105;
         System.out.println("Your social tax is " + socialTax);
 
-        //income tax rate
         double yearIncome = grossIncome * 12;
 
         if(yearIncome <= 20004){
@@ -50,33 +52,50 @@ public class countryList {
         } double incomeTaxRate = 0.31;
         System.out.println("Your income tax rate is " + incomeTaxRate);
 
-        //income tax
+        if (children > 5){
+            children = 5;
+        } else {
+            System.out.println("Children: " + children);
+        }
+
+        if (minimum > 350){
+            minimum = 350;
+        } else {
+            System.out.println("Not applicable minimum: " + minimum);
+        }
+
         double incomeTax = (grossIncome - socialTax - children * 250 - minimum - dis - pens) * incomeTaxRate;
 
-        //netSalary
         double netIncome = grossIncome - socialTax - incomeTax;
         System.out.println("Your net income is: " + netIncome);
     }
 
-    public void Spain(Connection conn,int industry, double grossIncome, double rent, double mortgage, double donations)throws SQLException{
+    public void Spain(Connection conn, int industry, double grossIncome, double rent, double mortgage, double donations) throws SQLException {
 
         String sql = "INSERT INTO usersSpain (industry, grossIncome, rent, mortgage, donations) VALUES (?, ?, ?, ?, ?);";
 
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
-        preparedStatement.setInt(1,industry);
+        preparedStatement.setInt(1, industry);
         preparedStatement.setDouble(2, grossIncome);
         preparedStatement.setDouble(3, rent);
         preparedStatement.setDouble(4, mortgage);
-        preparedStatement.setDouble(5,donations);
+        preparedStatement.setDouble(5, donations);
 
+        int rowSpain = preparedStatement.executeUpdate();
+
+        if (rowSpain > 0) {
+            System.out.println("A new user was inserted successfully");
+        } else {
+            System.out.println("Something went wrong");
+        }
 
         if(industry == 1){double socialTaxRate = 0.1d;} double socialTaxRate = 0.05d;
         System.out.println("Your income tax rate is " + socialTaxRate);
-        //social tax
+
         double socialTax = grossIncome * socialTaxRate;
         System.out.println("Your social tax is " + socialTax);
-        //income tax rate
+
         double yearIncome = grossIncome * 12;
 
         if(yearIncome <= 12450){
@@ -90,14 +109,13 @@ public class countryList {
         } double incomeTaxRate = 0.45;
         System.out.println("Your income tax rate is " + incomeTaxRate);
 
-        //income tax
-        double incomeTax = (grossIncome - socialTax - rent - mortgage - donations) * incomeTaxRate;
-        //netSalary
+        double incomeTax = (grossIncome - socialTax - (rent + mortgage + donations) * 0.15d) * incomeTaxRate;
+
         double netIncome = grossIncome - socialTax - incomeTax;
         System.out.println("Your net income is: " + netIncome);
     }
 
-    public void Vatican(Connection conn, boolean pop, boolean god, double grossIncome)throws  SQLException {
+    public void Vatican(Connection conn, boolean pop, boolean god, double grossIncome) throws SQLException {
 
         String sql = "INSERT INTO usersVatican (pop, god, grossIncome) VALUES (?, ?, ?);";
 
@@ -107,6 +125,13 @@ public class countryList {
         preparedStatement.setBoolean(2, god);
         preparedStatement.setDouble(3, grossIncome);
 
+        int rowVatican = preparedStatement.executeUpdate();
+
+        if (rowVatican > 0) {
+            System.out.println("A new user was inserted successfully");
+        } else {
+            System.out.println("Something went wrong");
+        }
 
         double incomeTaxRate;
         if(pop == true) {incomeTaxRate = 0.05d;} else {incomeTaxRate = 0;}
@@ -115,15 +140,15 @@ public class countryList {
         if(god == true) {GODincomeTaxRate = 0;} else {GODincomeTaxRate = 0.20d;}
 
         System.out.println("Your income tax rate is " + incomeTaxRate);
-        //income tax
+
         double incomeTax = grossIncome * incomeTaxRate;
         double GODincomeTax = grossIncome * GODincomeTaxRate;
-        //netSalary
+
         double netIncome = grossIncome + incomeTax - GODincomeTax;
         System.out.println("Your net income is: " + netIncome);
     }
 
-    public void Monaco(Connection conn, int months, double deposit, double grossIncome)throws SQLException{
+    public void Monaco(Connection conn, int months, double deposit, double grossIncome) throws SQLException {
 
         String sql = "INSERT INTO usersMonaco (month, deposit, grossIncome) VALUES (?, ?, ?);";
 
@@ -133,6 +158,13 @@ public class countryList {
         preparedStatement.setDouble(2, deposit);
         preparedStatement.setDouble(3, grossIncome);
 
+        int rowMonaco = preparedStatement.executeUpdate();
+
+        if (rowMonaco > 0) {
+            System.out.println("A new user was inserted successfully");
+        } else {
+            System.out.println("Something went wrong");
+        }
 
         double incomeTaxRate = 0;
         if (months < 3 && deposit >= 500000d) {
@@ -141,43 +173,44 @@ public class countryList {
         else if (months > 3){
             incomeTaxRate = 0.5d;
         }
-
         System.out.println("Your income tax rate is " + incomeTaxRate);
-        //income tax
+
         double incomeTax = grossIncome * incomeTaxRate;
-        //netSalary
+
         double netIncome = grossIncome + incomeTax;
         System.out.println("Your net income is: " + netIncome);
     }
 
-    public void Wonderland(Connection conn, int pet, double grossIncome)throws SQLException{
+    public void Wonderland(Connection conn, int pet, double grossIncome) throws SQLException {
 
         String sql = "INSERT INTO usersWonderland (pet, grossIncome) VALUES (?, ?);";
 
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
-
         preparedStatement.setInt(1, pet);
         preparedStatement.setDouble(2, grossIncome);
 
+        int rowWonderland = preparedStatement.executeUpdate();
+
+        if (rowWonderland > 0) {
+            System.out.println("A new user was inserted successfully");
+        } else {
+            System.out.println("Something went wrong");
+        }
 
         double incomeTaxRate;
         if(pet == 1) {incomeTaxRate = 0.05d;} else {incomeTaxRate = 0.1d;}
 
         System.out.println("Your income tax rate is " + incomeTaxRate);
-        //income tax
+
         double incomeTax = grossIncome * incomeTaxRate;
-        //netSalary
-        double netIncome = grossIncome - incomeTax;
+
         Random generator = new Random();
         double num = generator.nextDouble()*(0.5d-0) + 0;
         double randTax = grossIncome * num;
         System.out.println("Your random tax: " + num);
 
+        double netIncome = grossIncome - randTax - incomeTax;
         System.out.println("Your net income is: " + netIncome);
-
-        double netIncome2 = grossIncome - randTax - incomeTax;
-        System.out.println("Your net income is: " + netIncome2);
     }
-
 }
